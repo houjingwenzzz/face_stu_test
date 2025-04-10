@@ -143,12 +143,12 @@ class TaskManager(TaskInterface, ProblemInterface):
                     else:
                         wrong_count += 1
                         self.logger.info(
-                            f"图片ID{imageFileTableID}识别错误：真实标签={true_label}，预测标签={predicted_label}")
+                            f"[SUCCESS]图片ID{imageFileTableID}识别错误：真实标签={true_label}，预测标签={predicted_label}")
                     break  # 找到匹配的图像后跳出内循环，提高效率
 
         # 使用实际测试的图像数量作为分母
         accuracy = correct_count / total_count if total_count > 0 else 0
-        self.logger.info(f"结果报告\n总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
+        self.logger.info(f"[SUCCESS]结果报告\n总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
 
 
         scoreModel = ScoreModel()
