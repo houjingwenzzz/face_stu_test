@@ -152,7 +152,7 @@ class TaskManager(TaskInterface, ProblemInterface):
         # 使用实际测试的图像数量作为分母
         accuracy = correct_count / total_count if total_count > 0 else 0
         # 将结果报告添加到日志列表
-        self.log_messages.append(f"结果报告\n总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
+        self.log_messages.append(f"结果报告: 总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
 
 
         scoreModel = ScoreModel()
@@ -166,7 +166,7 @@ class TaskManager(TaskInterface, ProblemInterface):
     # 添加新方法，用于一次性输出所有日志
     def output_all_logs(self):
         if self.log_messages:
-            combined_logs = "\n".join(self.log_messages)
+            combined_logs = "//".join(self.log_messages)
             self.logger.info(f"[SUCCESS]{combined_logs}")
             # 输出后清空日志列表
             self.log_messages = []
