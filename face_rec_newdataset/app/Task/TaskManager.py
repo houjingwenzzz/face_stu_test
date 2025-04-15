@@ -26,6 +26,8 @@ class TaskManager(TaskInterface, ProblemInterface):
         logging.basicConfig(level=logging.INFO,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger("TaskManager")
+        # 添加日志收集列表
+        self.log_messages = []
 
     def initial(self, taskConfiguration):
         # self.taskConfiguration = taskConfiguration
@@ -142,18 +144,32 @@ class TaskManager(TaskInterface, ProblemInterface):
                         correct_count += 1
                     else:
                         wrong_count += 1
-                        self.logger.info(
-                            f"[SUCCESS]图片ID{imageFileTableID}识别错误：真实标签={true_label}，预测标签={predicted_label}")
+                        # 将日志添加到列表
+                        self.log_messages.append(
+                            f"图片ID{imageFileTableID}识别错误：真实标签={true_label}，预测标签={predicted_label}")
                     break  # 找到匹配的图像后跳出内循环，提高效率
 
         # 使用实际测试的图像数量作为分母
         accuracy = correct_count / total_count if total_count > 0 else 0
-        self.logger.info(f"[SUCCESS]结果报告\n总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
+        # 将结果报告添加到日志列表
+        self.log_messages.append(f"结果报告\n总人脸数：{total_count}，正确识别数：{correct_count}，错误识别数：{wrong_count}")
 
 
         scoreModel = ScoreModel()
         scoreModel.score = accuracy * 100
         return scoreModel
+
+    # 添加新方法，用于获取所有收集的日志
+    def get_all_logs(self):
+        return self.log_messages
+    
+    # 添加新方法，用于一次性输出所有日志
+    def output_all_logs(self):
+        if self.log_messages:
+            combined_logs = "\n".join(self.log_messages)
+            self.logger.info(f"[SUCCESS]{combined_logs}")
+            # 输出后清空日志列表
+            self.log_messages = []
 
 
 

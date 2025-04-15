@@ -39,6 +39,7 @@ if __name__ == '__main__':
     # 输出结果
     score = scoreModel.score
     print(f"最终得分：{score}")
+    taskManager.output_all_logs()
     logger.info(f"[SUCCESS]最终得分:{score}")
 
     # get env
